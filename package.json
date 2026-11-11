@@ -56,8 +56,7 @@
       "out/**",
       "package.json",
       "!node_modules/@node-llama-cpp/*-cuda*/**",
-      "!node_modules/**/*.{md,map,ts,cc,cpp,h,hpp}",
-      "!node_modules/node-llama-cpp/llama/**"
+      "!node_modules/**/*.{md,map,ts,cc,cpp,h,hpp}"
     ],
     "asarUnpack": [
       "node_modules/node-llama-cpp/**",
