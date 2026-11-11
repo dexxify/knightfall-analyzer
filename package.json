@@ -1,0 +1,143 @@
+{
+  "name": "knightfall-analyzer",
+  "productName": "Knightfall Analyzer",
+  "version": "0.1.0",
+  "description": "Open-source local chess game review with Stockfish and voiced AI coaches",
+  "license": "GPL-3.0-or-later",
+  "author": "Knightfall Analyzer contributors",
+  "type": "module",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "start": "electron-vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dist": "electron-vite build && electron-builder",
+    "dist:dir": "electron-vite build && electron-builder --dir",
+    "test:e2e": "electron-vite build && node tests/e2e/smoke.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
+    "@lichess-org/chessground": "^10.1.1",
+    "chess.js": "^1.4.0",
+    "fflate": "^0.8.2",
+    "kokoro-js": "^1.2.1",
+    "lucide-react": "^1.72.0",
+    "node-llama-cpp": "^3.22.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "electron": "^45.3.0",
+    "electron-builder": "^26.18.0",
+    "electron-vite": "^6.0.0",
+    "playwright-core": "^1.65.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
+  },
+  "build": {
+    "appId": "io.github.dexxify.knightfall-analyzer",
+    "productName": "Knightfall Analyzer",
+    "copyright": "Copyright (C) 2026 Knightfall Analyzer contributors. GPL-3.0-or-later.",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**",
+      "package.json",
+      "!node_modules/@node-llama-cpp/*-cuda*/**",
+      "!node_modules/**/*.{md,map,ts,cc,cpp,h,hpp}",
+      "!node_modules/node-llama-cpp/llama/**"
+    ],
+    "asarUnpack": [
+      "node_modules/node-llama-cpp/**",
+      "node_modules/@node-llama-cpp/**",
+      "node_modules/onnxruntime-node/**",
+      "node_modules/onnxruntime-common/**",
+      "node_modules/@huggingface/transformers/**",
+      "node_modules/kokoro-js/**",
+      "node_modules/phonemizer/**",
+      "node_modules/sharp/**",
+      "node_modules/@img/**"
+    ],
+    "extraResources": [
+      {
+        "from": "coaches",
+        "to": "coaches"
+      },
+      {
+        "from": "resources/openings.json",
+        "to": "openings.json"
+      },
+      {
+        "from": "AI_SYSTEM_PROMPT.md",
+        "to": "AI_SYSTEM_PROMPT.md"
+      },
+      {
+        "from": "LICENSE",
+        "to": "LICENSE.txt"
+      },
+      {
+        "from": "THIRD_PARTY.md",
+        "to": "THIRD_PARTY.md"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "files": [
+        "!node_modules/onnxruntime-node/bin/**/darwin/**",
+        "!node_modules/onnxruntime-node/bin/**/linux/**",
+        "!node_modules/onnxruntime-node/bin/**/win32/arm64/**",
+        "!node_modules/@node-llama-cpp/win-arm64/**"
+      ],
+      "icon": "resources/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Knightfall Analyzer",
+      "license": "LICENSE"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.board-games",
+      "files": [
+        "!node_modules/onnxruntime-node/bin/**/win32/**",
+        "!node_modules/onnxruntime-node/bin/**/linux/**"
+      ],
+      "icon": "resources/icon.png"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Game",
+      "files": [
+        "!node_modules/onnxruntime-node/bin/**/win32/**",
+        "!node_modules/onnxruntime-node/bin/**/darwin/**"
+      ],
+      "icon": "resources/icon.png"
+    }
+  }
+}
